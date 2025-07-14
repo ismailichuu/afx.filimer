@@ -242,3 +242,40 @@ if (mobileMenuBtn && navLinks) {
         mobileMenuBtn.classList.toggle('active');
     });
 }
+
+//dynamic image gallery Section
+document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.gallery-item');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    let currentVisible = 8;
+
+    // Initially hide all extra items (just in case)
+    items.forEach((item, index) => {
+        if (index >= currentVisible) {
+            item.classList.remove('show');
+        }
+    });
+
+    loadMoreBtn.addEventListener('click', () => {
+        const total = items.length;
+        const rest = total - currentVisible;
+        const itemsPerClick = 4;
+        let next = currentVisible + itemsPerClick;
+
+        for (let i = currentVisible; i < next && i < total; i++) {
+            console.log(items[i])
+            items[i].classList.add('show');
+        }
+
+        currentVisible = next;
+
+        if (currentVisible >= total) {
+            loadMoreBtn.style.display = 'none';
+        }
+    });
+
+    if (items.length <= 4) {
+        loadMoreBtn.style.display = 'none';
+    }
+});
+
