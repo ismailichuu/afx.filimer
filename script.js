@@ -67,25 +67,6 @@ document.querySelectorAll('.scroll-reveal').forEach(el => {
 const filterButtons = document.querySelectorAll('.filter-btn');
 const galleryItems = document.querySelectorAll('.gallery-item');
 
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Remove active class from all buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
-        button.classList.add('active');
-
-        const filterValue = button.getAttribute('data-filter');
-
-        galleryItems.forEach(item => {
-            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                item.style.display = 'block';
-                item.style.animation = 'fadeInUp 0.5s ease forwards';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-});
 
 // Gallery item hover effects
 galleryItems.forEach(item => {
@@ -259,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMoreBtn.addEventListener('click', () => {
         const total = items.length;
         const rest = total - currentVisible;
-        const itemsPerClick = 4;
+        const itemsPerClick = 8;
         let next = currentVisible + itemsPerClick;
 
         for (let i = currentVisible; i < next && i < total; i++) {
@@ -279,3 +260,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+// Image Zoom Popup
+document.addEventListener('DOMContentLoaded', () => {
+  const zoomTriggers = document.querySelectorAll('.zoom-trigger');
+  const popup = document.getElementById('imagePopup');
+  const popupImg = document.getElementById('popupImg');
+  const closeBtn = document.getElementById('closePopup');
+
+  if (!popup || !popupImg || !closeBtn) return;
+
+  zoomTriggers.forEach(img => {
+    img.addEventListener('click', () => {
+      popup.style.display = 'flex';
+      popupImg.src = img.src;
+      // Add active class for animations
+      setTimeout(() => {
+        popup.classList.add('active');
+      }, 10);
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    popup.classList.remove('active');
+    // Hide after animation completes
+    setTimeout(() => {
+      popup.style.display = 'none';
+    }, 300);
+  });
+
+  // Optional: Close popup on outside click
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+      popup.classList.remove('active');
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 300);
+    }
+  });
+});
