@@ -133,31 +133,16 @@ serviceCards.forEach((card, index) => {
     });
 });
 
-// Typing effect for hero title (optional enhancement)
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    type();
-}
-
 // Initialize typing effect after page load
-window.addEventListener('load', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        setTimeout(() => {
-            typeWriter(heroTitle, originalText, 150);
-        }, 1000);
-    }
-});
+// window.addEventListener('load', () => {
+//     const heroTitle = document.querySelector('.hero-title');
+//     if (heroTitle) {
+//         const originalText = heroTitle.textContent;
+//         setTimeout(() => {
+//             typeWriter(heroTitle, originalText, 150);
+//         }, 1000);
+//     }
+// });
 
 // Add floating animation to service icons
 serviceCards.forEach(card => {
