@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AFX Filimer - Visual Storyteller</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
   <style>
     * {
       margin: 0;
@@ -143,11 +144,16 @@
       overflow: hidden;
       z-index: 2;
       background-color: #f0f0f0;
-      background-image: url('images/banner.png');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+    }
+    
+    .hero-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
     .hero::before {
@@ -330,6 +336,10 @@
 
     /* About Section */
     .about {
+      padding: 4rem 0 0 0;
+      position: relative;
+      display: flex;
+      align-items: center;
       background: linear-gradient(180deg, transparent 0%, rgba(74, 158, 255, 0.05) 100%);
     }
 
@@ -405,6 +415,40 @@
       border-radius: 20px;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
       transition: transform 0.5s;
+    }
+
+    /* Mute Button Styles */
+    .mute-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .mute-button:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: scale(1.1);
+    }
+
+    .mute-button i {
+      font-size: 1.2rem;
+    }
+
+    .video-background {
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
 
     .about-image:hover img {
@@ -786,6 +830,28 @@
       box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8);
     }
 
+    .fullscreen-video {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+    }
+    
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
     .close-btn {
       position: absolute;
       top: 40px;
@@ -877,12 +943,12 @@
     #loading-overlay {
       position: fixed;
       inset: 0;
-      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: #000;
+      color: #fff;
       font-family: 'Inter', sans-serif;
       z-index: 9999;
       transition: opacity 0.8s ease, visibility 0.8s ease;
@@ -897,138 +963,100 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       gap: 2rem;
     }
 
-    .aperture-loader {
-      width: 120px;
-      height: 120px;
+    .wave-line {
+      width: 100%;
+      max-width: 300px;
+      height: 100px;
       position: relative;
-      margin-bottom: 1rem;
+      margin: 0 auto 2rem;
     }
 
-    .aperture-blade {
-      position: absolute;
+    .wave-line svg {
       width: 100%;
       height: 100%;
-      top: 0;
-      left: 0;
-      transform-origin: center;
     }
 
-    .aperture-blade::before {
-      content: '';
-      position: absolute;
-      width: 50%;
-      height: 3px;
-      background: linear-gradient(90deg, #4a9eff, #ff4a9e);
-      top: 50%;
-      left: 50%;
-      transform-origin: left center;
-      border-radius: 2px;
+    .wave-line path {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawWave 4s ease-in-out forwards;
     }
 
-    .aperture-blade:nth-child(1) { transform: rotate(0deg); }
-    .aperture-blade:nth-child(2) { transform: rotate(60deg); }
-    .aperture-blade:nth-child(3) { transform: rotate(120deg); }
-    .aperture-blade:nth-child(4) { transform: rotate(180deg); }
-    .aperture-blade:nth-child(5) { transform: rotate(240deg); }
-    .aperture-blade:nth-child(6) { transform: rotate(300deg); }
-
-    .aperture-loader {
-      animation: aperturePulse 2s ease-in-out infinite;
-    }
-
-    @keyframes aperturePulse {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 0.8;
-      }
-      50% {
-        transform: scale(1.1);
-        opacity: 1;
+    @keyframes drawWave {
+      to {
+        stroke-dashoffset: 0;
       }
     }
 
-    .aperture-blade::before {
-      animation: bladeRotate 3s linear infinite;
-    }
-
-    @keyframes bladeRotate {
-      0% {
-        transform: rotate(0deg) translateX(0);
-        opacity: 0.6;
-      }
-      50% {
-        transform: rotate(180deg) translateX(20px);
-        opacity: 1;
-      }
-      100% {
-        transform: rotate(360deg) translateX(0);
-        opacity: 0.6;
-      }
-    }
-
-    #loading-text {
-      font-size: 1.1rem;
-      letter-spacing: 0.2rem;
+    .loading-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.3rem;
       text-transform: uppercase;
-      font-weight: 500;
-      color: #000;
-      opacity: 0.8;
-      animation: textFade 2s ease-in-out infinite;
-      transition: opacity 0.3s ease;
+      color: rgba(255, 255, 255, 0.7);
+      animation: fadeInOut 2s ease-in-out infinite;
+      animation-delay: 0.5s;
     }
 
-    @keyframes textFade {
-      0%, 100% {
-        opacity: 0.6;
-      }
-      50% {
-        opacity: 1;
-      }
-    }
-
-    .loading-progress {
-      width: 200px;
-      height: 2px;
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      overflow: hidden;
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
       margin-top: 1rem;
     }
 
-    .loading-progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #4a9eff, #ff4a9e);
-      border-radius: 10px;
-      width: 0%;
-      animation: progressLoad 2s ease-in-out infinite;
-    }
-
-    @keyframes progressLoad {
-      0% {
-        width: 0%;
-        transform: translateX(0);
+    @keyframes fadeInOut {
+      0%, 100% {
+        opacity: 0.4;
       }
       50% {
-        width: 70%;
-        transform: translateX(0);
-      }
-      100% {
-        width: 100%;
-        transform: translateX(0);
+        opacity: 1;
       }
     }
 
-    .loading-brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.3rem;
-      margin-bottom: 3rem;
-      color: #000;
-      opacity: 0.9;
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-brand .ti-cursor {
+      color: #fff;
+      font-weight: 100;
+      opacity: 1;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% {
+        opacity: 1;
+      }
+      50%, 100% {
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .loading-brand {
+        font-size: 3.5rem;
+      }
     }
   </style>
 </head>
@@ -1036,19 +1064,12 @@
 <body>
   <div id="loading-overlay">
     <div class="loader-container">
-      <div class="loading-brand">AFX</div>
-      <div class="aperture-loader">
-        <div class="aperture-blade"></div>
-        <div class="aperture-blade"></div>
-        <div class="aperture-blade"></div>
-        <div class="aperture-blade"></div>
-        <div class="aperture-blade"></div>
-        <div class="aperture-blade"></div>
+      <div class="wave-line">
+        <svg viewBox="0 0 500 100" preserveAspectRatio="none">
+          <path d="M0,50 C100,0 200,100 300,50 S450,0 500,50" />
+        </svg>
       </div>
-      <p id="loading-text">Adjusting focus...</p>
-      <div class="loading-progress">
-        <div class="loading-progress-bar"></div>
-      </div>
+      <div class="loading-subtitle">AFX FILIMER</div>
     </div>
   </div>
 
@@ -1069,6 +1090,7 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+      <img src="images/banner.png" alt="AFX Filimer Hero Banner" class="hero-image">
       <div class="hero-content">
         <!-- <div class="hero-subtitle">Visual Storyteller</div> -->
         <!-- <h1 class="hero-title">A F X</h1>
@@ -1086,32 +1108,28 @@
     </section>
 
     <!-- About Section -->
-    <section class="section about" id="about">
+    <section class="about" id="about">
       <div class="container">
         <div class="section-label">Who We Are</div>
-        <h2 class="section-title">About Us</h2>
-        <p class="section-subtitle">
-          A passionate visual storyteller capturing moments that truly resonate.
-        </p>
-        <div class="about-grid">
-          <div class="about-content">
-            <h3>Crafting Visual Excellence</h3>
-            <p>
-              With over 2 years of experience in photography and videography, we specialize
-              in turning real moments into cinematic memories. Blending artistic creativity with technical precision,
-              our team is committed to delivering visually stunning stories that last a lifetime.
-            </p>
-            <ul class="about-features">
-              <li><i class="fas fa-check"></i> 50+ Collaboration Projects</li>
-              <li><i class="fas fa-check"></i> 100+ Successful Projects</li>
-              <li><i class="fas fa-check"></i> International Portfolio</li>
-              <li><i class="fas fa-check"></i> Cutting-edge Equipment</li>
-            </ul>
-          </div>
-          <div class="about-image">
-            <img src="./images/IMG_6930.webp" alt="Collaboration">
-          </div>
+        <div class="about-content">
+          <h3>Crafting Visual Excellence</h3>
+          <p>
+            With over 2 years of experience in photography and videography, we specialize in turning real moments into cinematic memories. Blending artistic creativity with technical precision, our team is committed to delivering visually stunning stories that last a lifetime.
+          </p>
         </div>
+      </div>
+    </section>
+
+    <!-- Fullscreen Video Section -->
+    <section class="fullscreen-video">
+      <div class="video-background">
+        <video id="showreel-video" autoplay muted loop playsinline>
+          <source src="./images/ANN REEL (1).mov" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <button id="mute-toggle" class="mute-button" aria-label="Toggle mute">
+          <i class="fas fa-volume-mute"></i>
+        </button>
       </div>
     </section>
 
@@ -1418,44 +1436,29 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Video Mute Toggle
+      const video = document.getElementById('showreel-video');
+      const muteButton = document.getElementById('mute-toggle');
+      const muteIcon = muteButton.querySelector('i');
+
+      muteButton.addEventListener('click', () => {
+        video.muted = !video.muted;
+        if (video.muted) {
+          muteIcon.classList.remove('fa-volume-up');
+          muteIcon.classList.add('fa-volume-mute');
+        } else {
+          muteIcon.classList.remove('fa-volume-mute');
+          muteIcon.classList.add('fa-volume-up');
+        }
+      });
+
       // Loading Screen Management
       const loadingOverlay = document.getElementById('loading-overlay');
-      const loadingText = document.getElementById('loading-text');
-      const loadingMessages = [
-        'Adjusting focus...',
-        'Setting aperture...',
-        'Composing frame...',
-        'Capturing moments...',
-        'Ready to shoot!'
-      ];
-      let messageIndex = 0;
-
-      function updateLoadingMessage() {
-        if (messageIndex < loadingMessages.length - 1) {
-          loadingText.style.opacity = '0';
-          setTimeout(() => {
-            messageIndex++;
-            loadingText.textContent = loadingMessages[messageIndex];
-            loadingText.style.opacity = '1';
-          }, 300);
-        }
-      }
-
-      // Update message every 800ms
-      const messageInterval = setInterval(updateLoadingMessage, 800);
-
-      function hideLoadingScreen() {
-        clearInterval(messageInterval);
-        loadingText.textContent = loadingMessages[loadingMessages.length - 1];
-        setTimeout(() => {
-          loadingOverlay.classList.add('hidden');
-        }, 500);
-      }
-
-      // Hide loading screen after page load
+      
+      // Hide loading screen after delay
       setTimeout(() => {
-        hideLoadingScreen();
-      }, 1500);
+        loadingOverlay.classList.add('hidden');
+      }, 4300);
 
       // Navigation scroll effect
       window.addEventListener('scroll', () => {
