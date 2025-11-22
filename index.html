@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AFX Filimer - Visual Storyteller</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -16,29 +15,19 @@
     }
 
     :root {
-      --primary: #000;
+      --primary: #fff;
       --accent: #4a9eff;
       --accent-pink: #ff4a9e;
-      --text-light: rgba(255, 255, 255, 0.7);
-      --text-dim: rgba(255, 255, 255, 0.5);
+      --text-light: rgba(0, 0, 0, 0.7);
+      --text-dim: rgba(0, 0, 0, 0.5);
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #000;
-      color: #fff;
+      background: #fff;
+      color: #000;
       overflow-x: hidden;
       line-height: 1.6;
-    }
-
-    .three-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
     }
 
     .content-wrapper {
@@ -50,8 +39,10 @@
     .navbar {
       position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       width: 100%;
-      padding: 2rem 0;
+      padding: 1.5rem 0;
       background: transparent;
       z-index: 100;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,9 +50,9 @@
 
     .navbar.scrolled {
       padding: 1rem 0;
-      background: rgba(0, 0, 0, 0.95);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .nav-container {
@@ -71,15 +62,24 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      height: 100%;
     }
 
     .logo {
       font-size: 1.5rem;
       font-weight: 700;
-      color: #fff;
+      color: #000;
       text-decoration: none;
       letter-spacing: 0.2rem;
       transition: transform 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo img {
+      display: block;
+      object-fit: contain;
     }
 
     .logo:hover {
@@ -90,6 +90,14 @@
       display: flex;
       list-style: none;
       gap: 3rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      margin: 0;
+      padding: 0;
     }
 
     .nav-link {
@@ -117,7 +125,7 @@
 
     .nav-link:hover,
     .nav-link.active {
-      color: #fff;
+      color: #000;
     }
 
     .nav-link:hover::before,
@@ -133,6 +141,13 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
+      z-index: 2;
+      background-color: #f0f0f0;
+      background-image: url('images/banner.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
 
     .hero::before {
@@ -142,7 +157,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+      background: radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.05) 100%);
       z-index: 1;
     }
 
@@ -162,18 +177,7 @@
     }
 
     .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(4rem, 12vw, 10rem);
-      font-weight: 900;
-      letter-spacing: 0.5rem;
-      margin-bottom: 2rem;
-      background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 80px rgba(255, 255, 255, 0.3);
-      animation: fadeInUp 1.2s ease-out 0.2s backwards;
-      line-height: 1.1;
+      display: none;
     }
 
     .hero-description {
@@ -200,11 +204,11 @@
       letter-spacing: 0.15rem;
       text-decoration: none;
       text-transform: uppercase;
-      border: 2px solid #fff;
+      border: 2px solid #000;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       background: transparent;
-      color: #fff;
+      color: #000;
       position: relative;
       overflow: hidden;
     }
@@ -222,9 +226,9 @@
     }
 
     .btn-moment {
-      background: #fff;
-      color: #000;
-      border-color: #fff;
+      background: #000;
+      color: #fff;
+      border-color: #000;
     }
 
     .btn-moment::before {
@@ -326,7 +330,7 @@
 
     /* About Section */
     .about {
-      background: linear-gradient(180deg, transparent 0%, rgba(74, 158, 255, 0.03) 100%);
+      background: linear-gradient(180deg, transparent 0%, rgba(74, 158, 255, 0.05) 100%);
     }
 
     .about-grid {
@@ -359,8 +363,8 @@
 
     .about-features li {
       padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 10px;
       font-size: 1rem;
       transition: all 0.3s;
@@ -370,7 +374,7 @@
     }
 
     .about-features li:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(0, 0, 0, 0.05);
       border-color: var(--accent);
       transform: translateX(10px);
     }
@@ -409,7 +413,7 @@
 
     /* Services Section */
     .services {
-      background: linear-gradient(180deg, rgba(74, 158, 255, 0.03) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(74, 158, 255, 0.05) 0%, transparent 100%);
     }
 
     .services-grid {
@@ -420,9 +424,9 @@
 
     .service-card {
       padding: 3rem;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(0, 0, 0, 0.03);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 20px;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
@@ -492,7 +496,7 @@
       cursor: pointer;
       aspect-ratio: 1;
       display: none;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(0, 0, 0, 0.03);
     }
 
     .gallery-item.show {
@@ -558,9 +562,9 @@
 
     .filter-btn {
       padding: 1.2rem 3rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
+      background: rgba(0, 0, 0, 0.05);
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      color: #000;
       cursor: pointer;
       transition: all 0.3s;
       font-size: 0.9rem;
@@ -571,16 +575,16 @@
     }
 
     .filter-btn:hover {
-      background: #fff;
-      color: #000;
-      border-color: #fff;
+      background: #000;
+      color: #fff;
+      border-color: #000;
       transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
     /* Contact Section */
     .contact {
-      background: linear-gradient(180deg, transparent 0%, rgba(74, 158, 255, 0.03) 100%);
+      background: linear-gradient(180deg, transparent 0%, rgba(74, 158, 255, 0.05) 100%);
     }
 
     .contact-grid {
@@ -601,7 +605,7 @@
       gap: 1.5rem;
       padding: 1.5rem 0;
       font-size: 1.1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       transition: all 0.3s;
     }
 
@@ -623,11 +627,11 @@
     }
 
     .contact-form {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(0, 0, 0, 0.03);
       padding: 3rem;
       border-radius: 20px;
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .form-group {
@@ -638,9 +642,9 @@
     .form-group textarea {
       width: 100%;
       padding: 1.2rem 1.5rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background: rgba(0, 0, 0, 0.05);
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      color: #000;
       border-radius: 10px;
       font-size: 1rem;
       font-family: 'Inter', sans-serif;
@@ -651,7 +655,7 @@
     .form-group textarea:focus {
       outline: none;
       border-color: var(--accent);
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.08);
     }
 
     .form-group input::placeholder,
@@ -666,10 +670,10 @@
 
     /* Footer */
     .footer {
-      background: rgba(0, 0, 0, 0.95);
+      background: rgba(255, 255, 255, 0.95);
       padding: 5rem 0 2rem;
       margin-top: 8rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .footer-content {
@@ -705,10 +709,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 50%;
-      color: #fff;
+      color: #000;
       text-decoration: none;
       transition: all 0.3s;
       font-size: 1.2rem;
@@ -742,14 +746,14 @@
     }
 
     .footer-links a:hover {
-      color: #fff;
+      color: #000;
       transform: translateX(5px);
     }
 
     .footer-bottom {
       text-align: center;
       padding-top: 3rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
       color: var(--text-dim);
       font-size: 0.95rem;
     }
@@ -762,7 +766,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.98);
+      background: rgba(255, 255, 255, 0.98);
       z-index: 2000;
       align-items: center;
       justify-content: center;
@@ -787,7 +791,7 @@
       top: 40px;
       right: 60px;
       font-size: 3rem;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       transition: all 0.3s;
       width: 60px;
@@ -795,13 +799,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.1);
       border-radius: 50%;
     }
 
     .close-btn:hover {
       transform: rotate(90deg);
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.2);
     }
 
     /* Responsive */
@@ -822,6 +826,10 @@
     }
 
     @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem 0;
+      }
+
       .nav-container {
         padding: 0 2rem;
       }
@@ -869,13 +877,13 @@
     #loading-overlay {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #000000 70%, #0a0a0a 100%);
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: white;
-      font-family: Arial, sans-serif;
+      color: #000;
+      font-family: 'Inter', sans-serif;
       z-index: 9999;
       transition: opacity 0.8s ease, visibility 0.8s ease;
     }
@@ -885,52 +893,170 @@
       visibility: hidden;
     }
 
-    #loading-text {
-      font-size: 18px;
-      letter-spacing: 1px;
+    .loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
     }
 
-    .camera-loader {
-      font-size: 3.5rem;
-      color: white;
-      animation: flash 1.4s infinite ease-in-out;
-      margin-bottom: 12px;
+    .aperture-loader {
+      width: 120px;
+      height: 120px;
+      position: relative;
+      margin-bottom: 1rem;
     }
 
-    @keyframes flash {
+    .aperture-blade {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transform-origin: center;
+    }
 
-      0%,
-      100% {
-        opacity: 0.2;
+    .aperture-blade::before {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 3px;
+      background: linear-gradient(90deg, #4a9eff, #ff4a9e);
+      top: 50%;
+      left: 50%;
+      transform-origin: left center;
+      border-radius: 2px;
+    }
+
+    .aperture-blade:nth-child(1) { transform: rotate(0deg); }
+    .aperture-blade:nth-child(2) { transform: rotate(60deg); }
+    .aperture-blade:nth-child(3) { transform: rotate(120deg); }
+    .aperture-blade:nth-child(4) { transform: rotate(180deg); }
+    .aperture-blade:nth-child(5) { transform: rotate(240deg); }
+    .aperture-blade:nth-child(6) { transform: rotate(300deg); }
+
+    .aperture-loader {
+      animation: aperturePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes aperturePulse {
+      0%, 100% {
         transform: scale(1);
+        opacity: 0.8;
       }
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
 
+    .aperture-blade::before {
+      animation: bladeRotate 3s linear infinite;
+    }
+
+    @keyframes bladeRotate {
+      0% {
+        transform: rotate(0deg) translateX(0);
+        opacity: 0.6;
+      }
+      50% {
+        transform: rotate(180deg) translateX(20px);
+        opacity: 1;
+      }
+      100% {
+        transform: rotate(360deg) translateX(0);
+        opacity: 0.6;
+      }
+    }
+
+    #loading-text {
+      font-size: 1.1rem;
+      letter-spacing: 0.2rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #000;
+      opacity: 0.8;
+      animation: textFade 2s ease-in-out infinite;
+      transition: opacity 0.3s ease;
+    }
+
+    @keyframes textFade {
+      0%, 100% {
+        opacity: 0.6;
+      }
       50% {
         opacity: 1;
-        transform: scale(1.2);
       }
+    }
+
+    .loading-progress {
+      width: 200px;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .loading-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4a9eff, #ff4a9e);
+      border-radius: 10px;
+      width: 0%;
+      animation: progressLoad 2s ease-in-out infinite;
+    }
+
+    @keyframes progressLoad {
+      0% {
+        width: 0%;
+        transform: translateX(0);
+      }
+      50% {
+        width: 70%;
+        transform: translateX(0);
+      }
+      100% {
+        width: 100%;
+        transform: translateX(0);
+      }
+    }
+
+    .loading-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.3rem;
+      margin-bottom: 3rem;
+      color: #000;
+      opacity: 0.9;
     }
   </style>
 </head>
 
 <body>
   <div id="loading-overlay">
-    <div class="loader">
-      <div class="camera-loader">
-        <i class="fa-solid fa-camera"></i>
+    <div class="loader-container">
+      <div class="loading-brand">AFX</div>
+      <div class="aperture-loader">
+        <div class="aperture-blade"></div>
+        <div class="aperture-blade"></div>
+        <div class="aperture-blade"></div>
+        <div class="aperture-blade"></div>
+        <div class="aperture-blade"></div>
+        <div class="aperture-blade"></div>
+      </div>
+      <p id="loading-text">Adjusting focus...</p>
+      <div class="loading-progress">
+        <div class="loading-progress-bar"></div>
       </div>
     </div>
-    <p id="loading-text">Adjusting focus...</p>
   </div>
-
-  <!-- Three.js Canvas -->
-  <canvas class="three-canvas" id="threeCanvas"></canvas>
 
   <div class="content-wrapper">
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
       <div class="nav-container">
-        <a href="#home" class="logo">AFX</a>
+        <a href="#home" class="logo"><img src="./images/logo.png" alt="AFX Filimer" style="width: 50px; height: auto;"></a>
         <ul class="nav-links">
           <li><a href="#home" class="nav-link active">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
@@ -944,15 +1070,15 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
       <div class="hero-content">
-        <div class="hero-subtitle">Visual Storyteller</div>
-        <h1 class="hero-title">A F X</h1>
+        <!-- <div class="hero-subtitle">Visual Storyteller</div> -->
+        <!-- <h1 class="hero-title">A F X</h1>
         <p class="hero-description">
           Capturing life's most precious moments through the art of photography
         </p>
         <div class="cta-buttons">
           <a href="#gallery" class="btn btn-moment">View Moments</a>
           <a href="#contact" class="btn btn-collaborate">Let's Collaborate</a>
-        </div>
+        </div> -->
       </div>
       <div class="scroll-indicator">
         <i class="fas fa-chevron-down"></i>
@@ -1292,359 +1418,44 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Three.js Scene Setup
-      let scene, camera, renderer, particles, mouse = {
-          x: 0,
-          y: 0
-        },
-        time = 0;
-      const canvas = document.getElementById('threeCanvas');
+      // Loading Screen Management
+      const loadingOverlay = document.getElementById('loading-overlay');
+      const loadingText = document.getElementById('loading-text');
+      const loadingMessages = [
+        'Adjusting focus...',
+        'Setting aperture...',
+        'Composing frame...',
+        'Capturing moments...',
+        'Ready to shoot!'
+      ];
+      let messageIndex = 0;
 
-      function initThree() {
-        scene = new THREE.Scene();
-        scene.fog = new THREE.Fog(0x000000, 1, 15);
-
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
-
-        renderer = new THREE.WebGLRenderer({
-          canvas,
-          antialias: true,
-          alpha: true
-        });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        createParticles();
-        createFloatingLetters();
-        createFloatingImages();
-
-        window.addEventListener('resize', onResize);
-        document.addEventListener('mousemove', onMouseMove);
-
-        animate();
-      }
-
-      function createParticles() {
-        const geometry = new THREE.BufferGeometry();
-        const count = 3000;
-        const positions = new Float32Array(count * 3);
-        const colors = new Float32Array(count * 3);
-
-        for (let i = 0; i < count * 3; i += 3) {
-          positions[i] = (Math.random() - 0.5) * 25;
-          positions[i + 1] = (Math.random() - 0.5) * 25;
-          positions[i + 2] = (Math.random() - 0.5) * 25;
-
-          const color = Math.random();
-          if (color > 0.7) {
-            colors[i] = 0.29;
-            colors[i + 1] = 0.62;
-            colors[i + 2] = 1;
-          } else if (color > 0.4) {
-            colors[i] = 1;
-            colors[i + 1] = 0.29;
-            colors[i + 2] = 0.62;
-          } else {
-            colors[i] = 1;
-            colors[i + 1] = 1;
-            colors[i + 2] = 1;
-          }
-        }
-
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-        const material = new THREE.PointsMaterial({
-          size: 0.04,
-          vertexColors: true,
-          transparent: true,
-          opacity: 0.7,
-          blending: THREE.AdditiveBlending
-        });
-
-        particles = new THREE.Points(geometry, material);
-        scene.add(particles);
-      }
-
-      function createLetterGeometry(letter) {
-        const c = document.createElement('canvas');
-        c.width = 200;
-        c.height = 200;
-        const ctx = c.getContext('2d');
-
-        ctx.fillStyle = 'white';
-        ctx.font = 'bold 120px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(letter, 64, 64);
-
-        const texture = new THREE.Texture(c);
-        texture.needsUpdate = true;
-
-        const material = new THREE.MeshBasicMaterial({
-          map: texture,
-          transparent: true,
-          opacity: 0.13,
-          side: THREE.DoubleSide,
-          blending: THREE.AdditiveBlending
-        });
-
-        const geometry = new THREE.PlaneGeometry(1.2, 1.2);
-        return new THREE.Mesh(geometry, material);
-      }
-
-      function createFloatingLetters() {
-        const letters = ['A', 'F', 'X'];
-        const positions = [
-          // Original ones
-          {
-            x: -3.5,
-            y: 1.5,
-            z: -3,
-            rot: 0.3
-          },
-          {
-            x: 3,
-            y: -1.2,
-            z: -4,
-            rot: -0.4
-          },
-          {
-            x: 0,
-            y: 2.5,
-            z: -6,
-            rot: 0.2
-          },
-          {
-            x: -2.5,
-            y: -2,
-            z: -5,
-            rot: -0.3
-          },
-          {
-            x: 4,
-            y: 1.8,
-            z: -7,
-            rot: 0.5
-          },
-          {
-            x: -4,
-            y: -0.5,
-            z: -4.5,
-            rot: 0.6
-          },
-          {
-            x: 2,
-            y: -2.5,
-            z: -3.5,
-            rot: -0.2
-          },
-
-          // Extended around all sides (top, bottom, left, right, deep back)
-          {
-            x: -5,
-            y: 3,
-            z: -4,
-            rot: 0.4
-          }, // top-left
-          {
-            x: 5,
-            y: 3,
-            z: -4.5,
-            rot: -0.3
-          }, // top-right
-          {
-            x: -5,
-            y: -3,
-            z: -5,
-            rot: 0.5
-          }, // bottom-left
-          {
-            x: 5,
-            y: -3,
-            z: -5.5,
-            rot: -0.4
-          }, // bottom-right
-
-          {
-            x: 0,
-            y: 4,
-            z: -6.5,
-            rot: 0.2
-          }, // top-center
-          {
-            x: 0,
-            y: -4,
-            z: -4.8,
-            rot: -0.2
-          }, // bottom-center
-
-          {
-            x: -6,
-            y: 0,
-            z: -5,
-            rot: 0.6
-          }, // left side mid
-          {
-            x: 6,
-            y: 0,
-            z: -5.2,
-            rot: -0.6
-          }, // right side mid
-
-          {
-            x: -3,
-            y: 2,
-            z: -8,
-            rot: 0.3
-          }, // deep back-left
-          {
-            x: 3,
-            y: 2,
-            z: -8,
-            rot: -0.3
-          }, // deep back-right
-          {
-            x: -2,
-            y: -2,
-            z: -7.5,
-            rot: 0.2
-          }, // deep bottom-left
-          {
-            x: 2,
-            y: -2,
-            z: -7.5,
-            rot: -0.2
-          }, // deep bottom-right
-
-          {
-            x: 0,
-            y: 0,
-            z: -9,
-            rot: 0
-          } // far center (deepest point)
-        ];
-
-        positions.forEach((pos, i) => {
-          const letter = letters[i % 3];
-          const mesh = createLetterGeometry(letter);
-
-          mesh.position.set(pos.x, pos.y, pos.z);
-          mesh.rotation.z = pos.rot;
-          mesh.userData = {
-            initialY: pos.y,
-            initialX: pos.x,
-            speed: 0.4 + Math.random() * 0.4,
-            rotSpeed: 0.15 + Math.random() * 0.2
-          };
-          scene.add(mesh);
-        });
-      }
-
-      // New function to create floating images
-      function createFloatingImages() {
-        const imageUrls = [
-          '/images/AFX LOGO.png',
-          '/images/IMG_7156.webp',
-          '/images/IMG_0009.webp',
-          '/images/IMG_7157.webp',
-          '/images/IMG_7145.webp',
-          '/images/IMG_8515.webp',
-          '/images/IMG_9997.webp',
-          '/images/IMG_9999.webp',
-          '/images/IMG_7145.webp',
-          '/images/logo.png',
-        ];
-
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const loadingText = document.getElementById('loading-text');
-
-        const manager = new THREE.LoadingManager();
-
-        manager.onStart = () => {
-          loadingOverlay.classList.remove('hidden');
-        };
-
-        manager.onLoad = () => {
-          loadingText.textContent = `Ready to Shot!`;
-          setTimeout(() => loadingOverlay.classList.add('hidden'), 500);
-        };
-
-        const textureLoader = new THREE.TextureLoader(manager);
-        const totalImages = 10;
-        const range = 12;
-
-        for (let i = 0; i < totalImages; i++) {
-          const url = imageUrls[i % imageUrls.length];
-          const x = (Math.random() - 0.5) * range;
-          const y = (Math.random() - 0.5) * range;
-          const z = (Math.random() - 0.5) * range - 3;
-
-          let opacity = z > -4 ? 0.35 : z > -6 ? 0.6 : 0.9;
-          let scale = z > -4 ? 0.6 : z > -6 ? 0.8 : 1;
-
-          textureLoader.load(url, (texture) => {
-            const geometry = new THREE.PlaneGeometry(3, 4.5);
-            const material = new THREE.MeshBasicMaterial({
-              map: texture,
-              transparent: true,
-              opacity,
-              side: THREE.DoubleSide,
-            });
-
-            const mesh = new THREE.Mesh(geometry, material);
-            mesh.position.set(x, y, z);
-            mesh.scale.set(scale, scale, scale);
-
-            mesh.userData = {
-              initialX: x,
-              initialY: y,
-              speed: 0.3 + Math.random() * 1,
-              rotSpeed: 0.1 + Math.random() * 0.8,
-            };
-
-            scene.add(mesh);
-          });
+      function updateLoadingMessage() {
+        if (messageIndex < loadingMessages.length - 1) {
+          loadingText.style.opacity = '0';
+          setTimeout(() => {
+            messageIndex++;
+            loadingText.textContent = loadingMessages[messageIndex];
+            loadingText.style.opacity = '1';
+          }, 300);
         }
       }
 
+      // Update message every 800ms
+      const messageInterval = setInterval(updateLoadingMessage, 800);
 
-      function onMouseMove(e) {
-        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      function hideLoadingScreen() {
+        clearInterval(messageInterval);
+        loadingText.textContent = loadingMessages[loadingMessages.length - 1];
+        setTimeout(() => {
+          loadingOverlay.classList.add('hidden');
+        }, 500);
       }
 
-      function onResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      }
-
-      function animate() {
-        requestAnimationFrame(animate);
-        time += 0.008;
-
-        if (particles) {
-          particles.rotation.y += 0.0008;
-          particles.rotation.x = Math.sin(time * 0.3) * 0.08;
-        }
-
-        scene.children.forEach(child => {
-          if (child.type === 'Mesh' && child.userData.speed) {
-            child.position.y = child.userData.initialY + Math.sin(time * child.userData.speed) * 0.4;
-            child.position.x = child.userData.initialX + Math.cos(time * child.userData.speed * 0.7) * 0.3;
-            child.rotation.y = time * child.userData.rotSpeed;
-            child.rotation.x = Math.sin(time * 0.5) * 0.2;
-          }
-        });
-
-        camera.position.x += (mouse.x * 0.3 - camera.position.x) * 0.05;
-        camera.position.y += (mouse.y * 0.2 - camera.position.y) * 0.05;
-        camera.lookAt(scene.position);
-
-        renderer.render(scene, camera);
-      }
+      // Hide loading screen after page load
+      setTimeout(() => {
+        hideLoadingScreen();
+      }, 1500);
 
       // Navigation scroll effect
       window.addEventListener('scroll', () => {
@@ -1727,8 +1538,6 @@
         });
       }
 
-      // Initialize Three.js
-      initThree();
     });
   </script>
 
